@@ -1,0 +1,47 @@
+{
+  "id": "6ZZwumdL5NrBNED1",
+  "status": "success",
+  "model": "google/gemini-3.1-flash-lite",
+  "startedAt": "2026-11-03 16:04:32.734",
+  "stoppedAt": "2026-11-03 16:04:41.929",
+  "question": "Hvad er adressen på Danmarks ambassade i Spanien?",
+  "timeline": [
+    {
+      "type": "tool-call",
+      "name": "v-rkt-j-find-ambassade",
+      "input": {
+        "country": "Spanien"
+      },
+      "output": {
+        "executionId": "180",
+        "status": "success",
+        "data": {
+          "Klargør ambassaderesultat": [
+            {
+              "found": true,
+              "count": 1,
+              "results": [
+                {
+                  "embassy": "Danmarks ambassade i Spanien",
+                  "address": "Calle Serrano 26, 7. 28001 Madrid",
+                  "city": "Madrid",
+                  "country": "Spanien",
+                  "source_url": "https://um.dk/spanien/om-os/kontakt-og-ekspedionstid/",
+                  "retrieved_at": "2026-11-03T15:50:57.332Z"
+                }
+              ],
+              "message": "Ambassadeoplysninger fundet i den gemte graf. Brug source_url som kilde. retrieved_at er indsamlingsdatoen."
+            }
+          ]
+        }
+      },
+      "success": true,
+      "workflowName": "Værktøj – find ambassade",
+      "workflowExecutionId": "180"
+    },
+    {
+      "type": "text",
+      "content": "Adressen på Danmarks ambassade i Spanien er Calle Serrano 26, 7. 28001 Madrid.\n\nKilde: https://um.dk/spanien/om-os/kontakt-og-ekspedionstid/"
+    }
+  ]
+}

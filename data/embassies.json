@@ -1,0 +1,14 @@
+[
+  {
+    "source_id": "es-ambassade-kontakt",
+    "country_id": "ES",
+    "embassy": {
+      "name": "Danmarks ambassade i Spanien",
+      "address": "Calle Serrano 26, 7. 28001 Madrid",
+      "id": "dk-madrid",
+      "retrieved_at": "2026-11-03T15:50:57.332Z",
+      "city": "Madrid",
+      "source_url": "https://um.dk/spanien/om-os/kontakt-og-ekspedionstid/"
+    }
+  }
+]

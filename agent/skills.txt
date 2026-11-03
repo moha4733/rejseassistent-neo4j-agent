@@ -1,0 +1,1 @@
+Ingen særskilte skills er anvendt. Rollen og guardrails findes i instructions.txt. Neo4j-grafen og vektorindekset tilgås gennem de to workflowværktøjer. Knowledge-tabben anvendes ikke.

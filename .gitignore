@@ -1,0 +1,11 @@
+.env
+.env.*
+!.env.example
+__pycache__/
+*.pyc
+.DS_Store
+.venv/
+*.sqlite*
+*credential*.json
+n8n-data/
+.neo4j/

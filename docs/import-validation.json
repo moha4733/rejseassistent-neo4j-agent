@@ -1,0 +1,21 @@
+{
+  "runs": [
+    {
+      "run": "rejseassistent-import-run.log",
+      "status": "success",
+      "imported_chunks": 20
+    },
+    {
+      "run": "rejseassistent-import-run-2.log",
+      "status": "success",
+      "imported_chunks": 20
+    }
+  ],
+  "node_counts_after_runs": {
+    "Document": 3,
+    "Chunk": 20,
+    "Country": 1,
+    "Embassy": 1
+  },
+  "duplicates_observed": false
+}

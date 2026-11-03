@@ -1,0 +1,91 @@
+{
+  "id": "4xvVVqRsCbwLhFBI",
+  "name": "Værktøj – find ambassade",
+  "nodes": [
+    {
+      "parameters": {
+        "inputSource": "jsonExample",
+        "jsonExample": "{\n  \"country\": \"Spanien\"\n}"
+      },
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        0,
+        0
+      ],
+      "id": "cc0aa545-71da-4677-a4e2-ba12ad6d5b60",
+      "name": "When Executed by Another Workflow"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://host.docker.internal:7474/db/rejseassistent/query/v2",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpBasicAuth",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ {\n  statement: [\n    \"MATCH (doc:Document)-[:DOCUMENTS]->(embassy:Embassy)\",\n    \"      -[:LOCATED_IN]->(country:Country)\",\n    \"WHERE toLower(country.name) = toLower(trim($country))\",\n    \"RETURN embassy.name AS embassy,\",\n    \"       embassy.address AS address,\",\n    \"       embassy.city AS city,\",\n    \"       country.name AS country,\",\n    \"       doc.source_url AS source_url,\",\n    \"       embassy.retrieved_at AS retrieved_at\",\n    \"ORDER BY embassy\"\n  ].join(\"\\n\"),\n  parameters: {\n    country: $json.country\n  }\n} }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.5,
+      "position": [
+        224,
+        0
+      ],
+      "id": "369c419a-87bc-40bd-8486-1fd87f5d3904",
+      "name": "HTTP Request",
+      "credentials": {
+        "httpBasicAuth": {
+          "id": "REPLACE_WITH_YOUR_CREDENTIAL_ID",
+          "name": "Neo4j Basic Auth (configure after import)"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "mode": "runOnceForEachItem",
+        "jsCode": "if ($json.errors?.length) {\n  throw new Error(\n    'Neo4j-fejl: ' +\n    $json.errors.map(error => error.message).join('; ')\n  );\n}\n\nconst data = $json.data;\n\nif (!Array.isArray(data?.fields) || !Array.isArray(data?.values)) {\n  throw new Error('Neo4j returnerede et uventet format.');\n}\n\nconst results = data.values.map(row =>\n  Object.fromEntries(\n    data.fields.map((field, index) => [field, row[index]])\n  )\n);\n\nreturn {\n  json: {\n    found: results.length > 0,\n    count: results.length,\n    results,\n    message: results.length > 0\n      ? 'Ambassadeoplysninger fundet i den gemte graf. Brug source_url som kilde. retrieved_at er indsamlingsdatoen.'\n      : 'Der blev ikke fundet ambassadeoplysninger for det valgte land i databasen. Det betyder ikke, at ambassaden ikke findes.'\n  }\n};"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        448,
+        0
+      ],
+      "id": "c94ddd3c-46de-4a70-a579-edfa6aa36a9f",
+      "name": "Klargør ambassaderesultat"
+    }
+  ],
+  "connections": {
+    "When Executed by Another Workflow": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request": {
+      "main": [
+        [
+          {
+            "node": "Klargør ambassaderesultat",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false
+  },
+  "active": false,
+  "pinData": {}
+}

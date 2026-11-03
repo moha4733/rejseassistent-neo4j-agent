@@ -1,0 +1,25 @@
+Brug dette værktøj til spørgsmål om mistet pas, rejsevejledning og andre rejseforhold.
+
+Input:
+- country: Landets danske navn, eksempelvis "Spanien".
+- question: Brugerens spørgsmål.
+
+Hvis landet mangler, spørg brugeren først.
+
+Værktøjet søger i gemte kildetekster i Neo4j og returnerer found, source_count og sources.
+
+Brug kun resultater, der besvarer spørgsmålet og gælder det rigtige land. Henvis til source_url. retrieved_at er indsamlingsdatoen.
+
+Hvis found er false, eller kilderne ikke besvarer spørgsmålet, sig tydeligt, at datagrundlaget mangler oplysninger. Gæt ikke, og brug ikke oplysninger om andre lande.
+
+Input mapping:
+{
+  "country": {
+    "mode": "ai",
+    "description": "Landets danske navn fra brugerens spørgsmål, fx Spanien eller Japan."
+  },
+  "question": {
+    "mode": "ai",
+    "description": "Brugerens konkrete rejsespørgsmål. Bevar betydningen og situationen."
+  }
+}

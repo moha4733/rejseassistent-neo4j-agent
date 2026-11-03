@@ -1,0 +1,17 @@
+Brug dette værktøj til at finde adressen på Danmarks ambassade i det land, brugeren spørger om.
+
+Input: country skal være landets danske navn, eksempelvis "Spanien". Hvis landet mangler, skal du spørge brugeren først.
+
+Værktøjet slår op i Neo4j og returnerer found, count og results med ambassadens navn, adresse, by, land, source_url og retrieved_at.
+
+Brug source_url som kilde. retrieved_at er indsamlingsdatoen.
+
+Hvis found er false, oplys, at databasen mangler ambassadeoplysninger om landet. Det betyder ikke, at ambassaden ikke findes.
+
+Input mapping:
+{
+  "country": {
+    "mode": "ai",
+    "description": "Landets danske navn fra brugerens spørgsmål, fx Spanien eller Japan. Skal altid udfyldes."
+  }
+}

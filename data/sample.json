@@ -1,0 +1,29 @@
+[
+  {
+    "document": {
+      "country": "Spanien",
+      "topic": "mistet_pas",
+      "publisher": "Udenrigsministeriet",
+      "id": "es-mistet-pas",
+      "retrieved_at": "2026-11-03T15:49:58.956Z",
+      "title": "Bortkommet eller stjålet pas",
+      "source_url": "https://um.dk/spanien/rejse-og-ophold/pas-og-konsulaere-ydelser/pas/bortkommet-eller-stjaalet-pas"
+    },
+    "chunks": [
+      {
+        "embedding_model": "nomic-embed-text",
+        "chunk_index": 0,
+        "id": "es-mistet-pas-0",
+        "text": "BORTKOMMET ELLER STJÅLET PAS Har du mistet eller fået stjålet dit pas, kan ambassaden eller et af de danske konsulater i Spanien udstede et provisorisk pas til hjemrejse. Hvis du mister dit danske pas, kan ambassaden i Madrid eller et af de danske konsulater i Spanien udstede et provisorisk pas med gyldighed til du kommer hjem til Danmark. Forinden skal du på nærmeste lokale politistation anmelde tabet af passet og anmode om en politirapport (\"Denuncia Policial\"). Politianmeldelse i Madrid kan også foretages telefonisk på engelsk på telefonnummer: (+34) 90 210 2112, hvorefter rapporten afhentes på nærmeste politistation. Politirapporten medbringes til ambassaden/konsulatet sammen med to fotos i passtørrelse 3,5 x 4,5 cm (for yderligere information se link herunder). Der skal udfyldes et",
+        "embedding_dimensions": 768
+      },
+      {
+        "embedding_model": "nomic-embed-text",
+        "chunk_index": 1,
+        "id": "es-mistet-pas-1",
+        "text": "medbringes til ambassaden/konsulatet sammen med to fotos i passtørrelse 3,5 x 4,5 cm (for yderligere information se link herunder). Der skal udfyldes et pasansøgningsskema. Skemaet kan du downloade på denne side [/spanien/rejse-og-ophold/pas-og-konsulaere-ydelser/pas/] LÆS MERE OM GEBYRSATSERNE FOR UDSTEDELSE AF PAS HER [/spanien/rejse-og-ophold/konsulaere-gebyrsatser/]",
+        "embedding_dimensions": 768
+      }
+    ]
+  }
+]

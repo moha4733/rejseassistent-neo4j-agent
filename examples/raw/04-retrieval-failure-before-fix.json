@@ -1,0 +1,133 @@
+{
+  "id": "mK0Ofi3eN2zBVxjR",
+  "status": "success",
+  "model": "google/gemini-3.1-flash-lite",
+  "startedAt": "2026-11-03 15:49:01.214",
+  "stoppedAt": "2026-11-03 15:51:40.174",
+  "question": "Jeg har mistet mit pas i Spanien. Hvad skal jeg gøre?",
+  "timeline": [
+    {
+      "type": "tool-call",
+      "name": "v-rkt-j-s-g-rejseinformation",
+      "input": {
+        "country": "Spanien",
+        "question": "hvad skal jeg gøre hvis jeg har mistet mit pas?"
+      },
+      "output": {
+        "executionId": "176",
+        "status": "success",
+        "data": {
+          "Code in JavaScript": [
+            {
+              "country": "Spanien",
+              "question": "hvad skal jeg gøre hvis jeg har mistet mit pas?",
+              "found": true,
+              "source_count": 7,
+              "sources": [
+                {
+                  "source_number": 1,
+                  "chunk_id": "es-rejsevejledning-12",
+                  "chunk_index": 12,
+                  "text": "er i tvivl om reglerne og hvilke betingelser, du skal opfylde, så kontakt Spaniens nærmeste ambassade, konsulat eller immigrationsmyndigheder i god tid inden rejsen. Danmark hjælper danske statsborgere og andre personer med fast bopæl i Danmark. Hvis du har dansk-spansk dobbelt statsborgerskab, siger folkeretten, at du som udgangspunkt ikke kan få dansk beskyttelse (konsulær bistand) over for Spanien, hvis Spanien ikke går med til det. Hvis du bliver anholdt, har du som dansk statsborger krav på at komme i kontakt med en dansk ambassade eller et dansk konsulat, hvis du selv ønsker det. Bed om at den danske ambassade eller det nærmeste danske konsulat bliver informeret straks. Du skal altid kunne vise gyldigt billed-ID. Du bør altid have enten dit kørekort i original eller en kopi af dit",
+                  "title": "Spanien",
+                  "source_url": "https://um.dk/rejse-og-ophold/rejse-til-udlandet/rejsevejledninger/spanien",
+                  "retrieved_at": "2026-11-03T15:50:57.332Z",
+                  "country": "Spanien",
+                  "score": null,
+                  "selection_score": 0.8374357,
+                  "retrieved_via": "neighbor"
+                },
+                {
+                  "source_number": 2,
+                  "chunk_id": "es-rejsevejledning-13",
+                  "chunk_index": 13,
+                  "text": "danske konsulat bliver informeret straks. Du skal altid kunne vise gyldigt billed-ID. Du bør altid have enten dit kørekort i original eller en kopi af dit pas på dig og have dit pas opbevaret et sikkert sted. * SUNDHED Du kan finde generel information om sundheds- og sygdomsforhold hos Statens Serum Institut [https://www.ssi.dk/] eller Sundhedsstyrelsen [https://www.sst.dk/da/]. Du kan også spørge din praktiserende læge og på vaccinationsklinikker. Læs om, hvordan du får din medicin med på rejsen [/rejse-og-ophold/foer-rejsen/medicin-og-vaccination/]. * REJSEFORSIKRING Vi opfordrer dig til at tegne en privat rejseforsikring, før du rejser til Spanien. Du bør sikre dig, at rejseforsikringen dækker dine behov. En rejseforsikring dækker ikke nødvendigvis alle udgifter eller i alle",
+                  "title": "Spanien",
+                  "source_url": "https://um.dk/rejse-og-ophold/rejse-til-udlandet/rejsevejledninger/spanien",
+                  "retrieved_at": "2026-11-03T15:50:57.332Z",
+                  "country": "Spanien",
+                  "score": 0.8374357,
+                  "selection_score": 0.8374357,
+                  "retrieved_via": "vector"
+                },
+                {
+                  "source_number": 3,
+                  "chunk_id": "es-rejsevejledning-14",
+                  "chunk_index": 14,
+                  "text": "du rejser til Spanien. Du bør sikre dig, at rejseforsikringen dækker dine behov. En rejseforsikring dækker ikke nødvendigvis alle udgifter eller i alle situationer. Læs mere om rejseforsikringer [/rejse-og-ophold/foer-rejsen/forsikring/]. Du kan anvende dit blå EU-sygesikringskort i Spanien. Kortet er dog ikke et alternativ til en privat rejseforsikring. Læs om det blå EU-sygesikringskort hos Styrelsen for Patientsikkerhed [https://stps.dk/borger-og-patient/det-blaa-eu-sygesikringskort/ferie-og-korte-ophold]. * KONTAKT Du kan finde kontaktoplysninger til den danske ambassade og danske konsulater i Spanien [http://spanien.um.dk/] og i Udenrigsministeriets Rejseklar [/rejse-og-ophold/rejse-til-udlandet/rejseklar/] app. Du kan altid kontakte Udenrigsministeriets Globale Vagtcenter 24/7",
+                  "title": "Spanien",
+                  "source_url": "https://um.dk/rejse-og-ophold/rejse-til-udlandet/rejsevejledninger/spanien",
+                  "retrieved_at": "2026-11-03T15:50:57.332Z",
+                  "country": "Spanien",
+                  "score": null,
+                  "selection_score": 0.8374357,
+                  "retrieved_via": "neighbor"
+                },
+                {
+                  "source_number": 4,
+                  "chunk_id": "es-rejsevejledning-4",
+                  "chunk_index": 4,
+                  "text": "forholde dig, hvis du rejser til lande med terrorrisiko [/rejse-og-ophold/under-rejsen/andre-risici/]. Find mere information, se Spaniens indenrigsministerium [https://www.interior.gob.es/opencms/en/inicio]. [https://www.interior.gob.es/opencms/en/inicio] * KRIMINALITET Du bør være forsigtig pga. risikoen for kriminalitet. Lomme-, taske- og tricktyverier, sker især i storbyer som fx Madrid, Barcelona og Malaga og på steder, hvor der er mange mennesker. Vær især opmærksom, hvis du kører med offentlig transport og i lufthavne. I store byer bør du også være opmærksom på risiko for røverier og voldelige overfald. Du bør undgå at have dyre smykker og andre ting af høj værdi eller mange penge på dig. Du bør i stedet opbevare dem fx i en sikkerhedsboks på hotellet. Biler med udenlandske",
+                  "title": "Spanien",
+                  "source_url": "https://um.dk/rejse-og-ophold/rejse-til-udlandet/rejsevejledninger/spanien",
+                  "retrieved_at": "2026-11-03T15:50:57.332Z",
+                  "country": "Spanien",
+                  "score": null,
+                  "selection_score": 0.8357134,
+                  "retrieved_via": "neighbor"
+                },
+                {
+                  "source_number": 5,
+                  "chunk_id": "es-rejsevejledning-5",
+                  "chunk_index": 5,
+                  "text": "dyre smykker og andre ting af høj værdi eller mange penge på dig. Du bør i stedet opbevare dem fx i en sikkerhedsboks på hotellet. Biler med udenlandske nummerplader og lejede biler er ofte udsat for indbrud. Sørg for at din bagage ikke kan ses udefra. Opbevar aldrig vigtige dokumenter som fx pas og flybilletter eller værdigenstande i bilen. Tricktyverier og røverier kan ske på hovedveje og rastepladser, hvor kriminelle kan signalere, at de har motorstop eller at der er noget i vejen med din bil for at få dig til at stoppe. Din bil kan blive stjålet. Seksuelle overgreb er sjældne, men kan være rettet mod turister. I nattelivet bør du selv købe dine mad- og drikkevarer og altid holde dem under opsyn. Der er risiko for, at der bliver tilsat bedøvende stoffer. Du kan blive udsat for tyveri",
+                  "title": "Spanien",
+                  "source_url": "https://um.dk/rejse-og-ophold/rejse-til-udlandet/rejsevejledninger/spanien",
+                  "retrieved_at": "2026-11-03T15:50:57.332Z",
+                  "country": "Spanien",
+                  "score": 0.8357134,
+                  "selection_score": 0.8357134,
+                  "retrieved_via": "vector"
+                },
+                {
+                  "source_number": 6,
+                  "chunk_id": "es-rejsevejledning-6",
+                  "chunk_index": 6,
+                  "text": "købe dine mad- og drikkevarer og altid holde dem under opsyn. Der er risiko for, at der bliver tilsat bedøvende stoffer. Du kan blive udsat for tyveri og/eller overgreb. Læs mere om, hvad du skal være opmærksom på i nattelivet [/rejse-og-ophold/under-rejsen/andre-risici/]. Svindel med betalingskort og røverier ved hæveautomater kan ske. Brug ikke en hæveautomat, hvis du ser noget mistænkeligt i nærheden. Hvis du betaler med betalingskort, bør du sikre dig, at du bliver opkrævet det korrekte beløb. Hvis du benytter wifi fra åbne netværk, fx i lufthavnen, på caféer og på hoteller, kan du risikere at blive mål for hacking. * ANDRE SIKKERHEDSRISICI Du bør holde dig på afstand af opløb og demonstrationer. De kan opstå med kort varsel og udvikle sig voldeligt. Det gælder især i de store byer, fx",
+                  "title": "Spanien",
+                  "source_url": "https://um.dk/rejse-og-ophold/rejse-til-udlandet/rejsevejledninger/spanien",
+                  "retrieved_at": "2026-11-03T15:50:57.332Z",
+                  "country": "Spanien",
+                  "score": 0.83246267,
+                  "selection_score": 0.8357134,
+                  "retrieved_via": "vector"
+                },
+                {
+                  "source_number": 7,
+                  "chunk_id": "es-rejsevejledning-7",
+                  "chunk_index": 7,
+                  "text": "SIKKERHEDSRISICI Du bør holde dig på afstand af opløb og demonstrationer. De kan opstå med kort varsel og udvikle sig voldeligt. Det gælder især i de store byer, fx i Madrid, Barcelona og andre steder i Katalonien. Vi anbefaler, at du holder dig opdateret om den aktuelle situation via de lokale myndigheder, nyhedsmedierne og dit rejsebureau. Du bør altid følge de lokale myndigheders anbefalinger. * NATURKATASTROFER Der er risiko for naturbrande i Spanien fra juli til midt i oktober, hvor der kan være høje temperaturer og meget tørt. Se kort over aktuelle brande [https://www.rtve.es/noticias/20240416/incendios-ultima-hora/16014106.shtml] samt kort over risikoen for naturbrande [https://www.aemet.es/es/eltiempo/prediccion/incendios]. Der er risiko for oversvømmelser især om foråret og",
+                  "title": "Spanien",
+                  "source_url": "https://um.dk/rejse-og-ophold/rejse-til-udlandet/rejsevejledninger/spanien",
+                  "retrieved_at": "2026-11-03T15:50:57.332Z",
+                  "country": "Spanien",
+                  "score": null,
+                  "selection_score": 0.83246267,
+                  "retrieved_via": "neighbor"
+                }
+              ],
+              "message": "Søgningen har fundet tekstbidder. De er ikke nødvendigvis alle relevante. Brug kun oplysninger, der besvarer spørgsmålet og gælder det valgte land. Henvis med [Kilde N] ud fra source_number og medtag den tilhørende source_url. Hvis teksterne ikke besvarer spørgsmålet, sig det tydeligt. retrieved_at er indsamlingsdatoen, ikke kildens opdateringsdato."
+            }
+          ]
+        }
+      },
+      "success": true,
+      "workflowName": "Værktøj – søg rejseinformation",
+      "workflowExecutionId": "176"
+    },
+    {
+      "type": "text",
+      "content": "Hvis du har mistet dit pas i Spanien, bør du kontakte den danske ambassade eller et dansk konsulat for at få hjælp [Kilde 3].\n\nDu kan finde kontaktoplysninger til den danske ambassade og de danske konsulater i Spanien via deres hjemmeside [http://spanien.um.dk/](http://spanien.um.dk/) eller i Udenrigsministeriets \"Rejseklar\"-app. Du kan også altid kontakte Udenrigsministeriets Globale Vagtcenter, som har åbent hele døgnet [Kilde 3].\n\nDette er uofficiel vejledning. Kontrollér oplysningerne i den officielle kilde."
+    }
+  ]
+}

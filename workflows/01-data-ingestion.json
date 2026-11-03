@@ -1,0 +1,359 @@
+{
+  "id": "rejseimport2026",
+  "name": "Rejseassistent – dataimport (aflevering)",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "153f581c-dd12-46f2-9492-ed9509535e90",
+      "name": "When clicking ‘Execute workflow’"
+    },
+    {
+      "parameters": {
+        "url": "={{ $json.url }}",
+        "options": {
+          "timeout": 30000
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.5,
+      "position": [
+        480,
+        0
+      ],
+      "id": "953808ba-50cf-4ddb-b33f-222689ab4b4b",
+      "name": "HTTP Request"
+    },
+    {
+      "parameters": {
+        "operation": "extractHtmlContent",
+        "extractionValues": {
+          "values": [
+            {
+              "key": "title",
+              "cssSelector": "h1"
+            },
+            {
+              "key": "text",
+              "cssSelector": "body",
+              "skipSelectors": "script, style, nav, header, footer, noscript"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.html",
+      "typeVersion": 1.2,
+      "position": [
+        720,
+        0
+      ],
+      "id": "1d1bf6c5-1c2c-4cb4-b9ef-c55c023dff80",
+      "name": "HTML"
+    },
+    {
+      "parameters": {
+        "jsCode": "return $input.all().map((item, index) => {\n  const source = $('Kildeliste').all()[index].json;\n  const title = String(item.json.title ?? '').replace(/\\s+/g, ' ').trim();\n  let text = String(item.json.text ?? '').replace(/\\s+/g, ' ').trim();\n  if (!title || !text || !source.id) throw new Error('Kilden mangler titel, tekst eller id.');\n  const pos = text.toLocaleLowerCase('da-DK').indexOf(title.toLocaleLowerCase('da-DK'));\n  if (pos >= 0) text = text.slice(pos);\n  let embassy_address = null;\n  if (source.id === 'es-ambassade-kontakt') {\n    const match = text.match(/Calle Serrano\\s+26,?\\s*7\\.?\\s*28001\\s+Madrid/i);\n    if (!match) throw new Error('Ambassadeadressen kunne ikke udtrækkes. Kontrollér kildesidens format.');\n    embassy_address = match[0];\n  }\n  return {json: {...source, ...item.json, source_id: source.id, source_url: source.url,\n    title, text, character_count: text.length, embassy_address,\n    embassy_id: embassy_address ? 'dk-madrid' : null,\n    embassy_name: embassy_address ? 'Danmarks ambassade i Spanien' : null,\n    embassy_city: embassy_address ? 'Madrid' : null}, pairedItem: {item: index}};\n});"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        960,
+        0
+      ],
+      "id": "df15a50f-c471-4422-9f79-ca166684a9f7",
+      "name": "Code in JavaScript"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "a2b58c42-11f4-4dfc-8941-b052a58c9ed6",
+              "name": "source_id",
+              "value": "={{ $('Kildeliste').item.json.id }}",
+              "type": "string"
+            },
+            {
+              "id": "35bd50bd-fc34-4135-a136-3d46e82f3de2",
+              "name": "country",
+              "value": "={{ $('Kildeliste').item.json.country }}",
+              "type": "string"
+            },
+            {
+              "id": "e1396eb8-f649-45e1-ad5b-9b8f24e39d18",
+              "name": "topic",
+              "value": "={{ $('Kildeliste').item.json.topic }}",
+              "type": "string"
+            },
+            {
+              "id": "fb9d3563-be00-48ed-8554-27576fede984",
+              "name": "publisher",
+              "value": "={{ $('Kildeliste').item.json.publisher }}",
+              "type": "string"
+            },
+            {
+              "id": "d556c533-0ffc-4af2-ada4-2a8f95b96320",
+              "name": "source_url",
+              "value": "={{ $('Kildeliste').item.json.url }}",
+              "type": "string"
+            },
+            {
+              "id": "b30ff984-8d75-485c-aeb6-b037cfd3bd5d",
+              "name": "retrieved_at",
+              "value": "={{ $('Kildeliste').item.json.retrieved_at }}",
+              "type": "string"
+            }
+          ]
+        },
+        "includeOtherFields": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.5,
+      "position": [
+        1200,
+        0
+      ],
+      "id": "fd3c7922-25ff-4fef-be15-89bc471267ea",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "jsCode": "const output = [];\nconst chunkSize = 800;\nconst overlap = 150;\n\nfor (const [inputIndex, item] of $input.all().entries()) {\n  const { text, ...metadata } = item.json;\n  const content = String(text ?? '').trim();\n\n  if (!content || !metadata.source_id) {\n    throw new Error('Tekst eller source_id mangler.');\n  }\n\n  const outputStart = output.length;\n  let start = 0;\n  let chunkIndex = 0;\n\n  while (start < content.length) {\n    let end = Math.min(start + chunkSize, content.length);\n\n    // Undgå så vidt muligt at klippe midt i et ord.\n    if (end < content.length) {\n      const lastSpace = content.lastIndexOf(' ', end);\n      if (lastSpace > start + overlap) {\n        end = lastSpace;\n      }\n    }\n\n    const chunkText = content.slice(start, end).trim();\n\n    output.push({\n      json: {\n        ...metadata,\n        chunk_id: `${metadata.source_id}-${chunkIndex}`,\n        chunk_index: chunkIndex,\n        chunk_text: chunkText,\n        chunk_character_count: chunkText.length\n      },\n      pairedItem: { item: inputIndex }\n    });\n\n    if (end === content.length) break;\n\n    start = end - overlap;\n\n    // Start næste chunk ved begyndelsen af et ord.\n    while (start > 0 && content[start - 1] !== ' ') {\n      start--;\n    }\n\n    chunkIndex++;\n  }\n  for (const chunk of output.slice(outputStart)) chunk.json.chunk_count = chunkIndex + 1;\n}\n\nreturn output;"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        0,
+        280
+      ],
+      "id": "f8d5535e-452f-4bbd-a358-3534731ee6c9",
+      "name": "Opdel tekst i chunks"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://host.docker.internal:11434/api/embed",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "model",
+              "value": "nomic-embed-text"
+            },
+            {
+              "name": "input",
+              "value": "={{ 'search_document: ' + $json.chunk_text }}"
+            },
+            {
+              "name": "keep_alive",
+              "value": "={{ 0 }}"
+            }
+          ]
+        },
+        "options": {
+          "timeout": 120000
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.5,
+      "position": [
+        240,
+        280
+      ],
+      "id": "50855295-9e3e-4b06-addf-73a0b7890d1e",
+      "name": "HTTP Request1"
+    },
+    {
+      "parameters": {
+        "mode": "runOnceForEachItem",
+        "jsCode": "// Find det tekststykke, som dette Ollama-svar tilhører.\nconst chunk = $('Opdel tekst i chunks').item.json;\nconst embedding = $json.embeddings?.[0];\n\nif (\n  !Array.isArray(embedding) ||\n  embedding.length === 0 ||\n  !embedding.every(value => Number.isFinite(value))\n) {\n  throw new Error('Ollama returnerede ikke en gyldig embedding.');\n}\n\nreturn {\n  json: {\n    ...chunk,\n    embedding,\n    embedding_model: $json.model,\n    embedding_dimensions: embedding.length\n  }\n};"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        480,
+        280
+      ],
+      "id": "6dff432d-fc5b-465b-9002-66b43a20fd0f",
+      "name": "Saml tekst og embedding"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://host.docker.internal:7474/db/rejseassistent/query/v2",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpBasicAuth",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ { statement: \"MERGE (country:Country {id: $country_id})\\nSET country.name = $country\\nMERGE (d:Document {id: $source_id})\\nSET d.title=$title, d.source_url=$source_url, d.country=$country,\\n    d.topic=$topic, d.publisher=$publisher, d.retrieved_at=$retrieved_at\\nMERGE (d)-[:ABOUT_COUNTRY]->(country)\\nFOREACH (_ IN CASE WHEN $embassy_address IS NULL THEN [] ELSE [1] END |\\n  MERGE (e:Embassy {id:$embassy_id})\\n  SET e.name=$embassy_name, e.address=$embassy_address, e.city=$embassy_city,\\n      e.source_url=$source_url, e.retrieved_at=$retrieved_at\\n  MERGE (e)-[:LOCATED_IN]->(country)\\n  MERGE (d)-[:DOCUMENTS]->(e)\\n)\\nMERGE (c:Chunk {id:$chunk_id})\\nSET c.text=$chunk_text, c.chunk_index=$chunk_index, c.embedding=$embedding,\\n    c.embedding_model=$embedding_model, c.embedding_dimensions=$embedding_dimensions\\nMERGE (d)-[:HAS_CHUNK]->(c)\\nWITH d,c\\nOPTIONAL MATCH (d)-[:HAS_CHUNK]->(stale:Chunk)\\nWHERE stale.chunk_index >= $chunk_count\\nWITH d,c,collect(stale) AS staleChunks\\nFOREACH (old IN staleChunks | DETACH DELETE old)\\nRETURN d.id AS source_id,c.id AS chunk_id,size(c.embedding) AS dimensions\", parameters: $json } }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.5,
+      "position": [
+        720,
+        280
+      ],
+      "id": "ec76aae5-6054-4dee-bc4d-a44ce4e2ca30",
+      "name": "Neo4j - gem chunks.",
+      "credentials": {
+        "httpBasicAuth": {
+          "id": "REPLACE_WITH_YOUR_CREDENTIAL_ID",
+          "name": "Neo4j Basic Auth (configure after import)"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const sources = [\n  {\n    id: \"es-mistet-pas\",\n    title: \"Bortkommet eller stjålet pas\",\n    url: \"https://um.dk/spanien/rejse-og-ophold/pas-og-konsulaere-ydelser/pas/bortkommet-eller-stjaalet-pas\",\n    country: \"Spanien\",\n    country_id: \"ES\",\n    topic: \"mistet_pas\",\n    publisher: \"Udenrigsministeriet\"\n  },\n  {\n    id: \"es-ambassade-kontakt\",\n    title: \"Kontakt til Danmarks ambassade i Spanien\",\n    url: \"https://um.dk/spanien/om-os/kontakt-og-ekspedionstid/\",\n    country: \"Spanien\",\n    country_id: \"ES\",\n    topic: \"repraesentation\",\n    publisher: \"Udenrigsministeriet\"\n  },\n  {\n    id: \"es-rejsevejledning\",\n    title: \"Rejsevejledning for Spanien\",\n    url: \"https://um.dk/rejse-og-ophold/rejse-til-udlandet/rejsevejledninger/spanien\",\n    country: \"Spanien\",\n    country_id: \"ES\",\n    topic: \"rejsevejledning\",\n    publisher: \"Udenrigsministeriet\"\n  }\n];\n\nconst retrievedAt = new Date().toISOString();\n\nreturn sources.map(source => ({\n  json: {\n    ...source,\n    retrieved_at: retrievedAt\n  }\n}));"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        240,
+        0
+      ],
+      "id": "c83720a9-8b0b-426d-8451-0c3570eded26",
+      "name": "Kildeliste"
+    },
+    {
+      "id": "0604eb3c-e335-4066-89bd-83775c5aa1a8",
+      "name": "Kontrollér import",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        960,
+        280
+      ],
+      "parameters": {
+        "jsCode": "const rows = $input.all();\nfor (const item of rows) {\n  if (item.json.errors?.length) throw new Error(JSON.stringify(item.json.errors));\n  if (!item.json.data?.values?.length) throw new Error('Neo4j returnerede ingen gemte chunks.');\n}\nreturn [{json:{imported_chunks:rows.length,status:'success'}}];"
+      }
+    }
+  ],
+  "connections": {
+    "When clicking ‘Execute workflow’": {
+      "main": [
+        [
+          {
+            "node": "Kildeliste",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request": {
+      "main": [
+        [
+          {
+            "node": "HTML",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTML": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code in JavaScript": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "Opdel tekst i chunks",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Opdel tekst i chunks": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request1": {
+      "main": [
+        [
+          {
+            "node": "Saml tekst og embedding",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Saml tekst og embedding": {
+      "main": [
+        [
+          {
+            "node": "Neo4j - gem chunks.",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Kildeliste": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Neo4j - gem chunks.": {
+      "main": [
+        [
+          {
+            "node": "Kontrollér import",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false
+  },
+  "active": false,
+  "pinData": {}
+}

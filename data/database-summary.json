@@ -1,0 +1,145 @@
+{
+  "nodes": [
+    {
+      "labels": [
+        "Document"
+      ],
+      "count": 3
+    },
+    {
+      "labels": [
+        "Chunk"
+      ],
+      "count": 20
+    },
+    {
+      "labels": [
+        "Country"
+      ],
+      "count": 1
+    },
+    {
+      "labels": [
+        "Embassy"
+      ],
+      "count": 1
+    }
+  ],
+  "relationships": [
+    {
+      "type": "HAS_CHUNK",
+      "count": 20
+    },
+    {
+      "type": "ABOUT_COUNTRY",
+      "count": 3
+    },
+    {
+      "type": "DOCUMENTS",
+      "count": 1
+    },
+    {
+      "type": "LOCATED_IN",
+      "count": 1
+    }
+  ],
+  "indexes": [
+    {
+      "name": "chunk_embedding",
+      "type": "VECTOR",
+      "state": "ONLINE",
+      "labelsOrTypes": [
+        "Chunk"
+      ],
+      "properties": [
+        "embedding"
+      ],
+      "options": {
+        "indexConfig": {
+          "vector.dimensions": 768,
+          "vector.default_search_expansion_factor": 3.0,
+          "vector.hnsw.m": 16,
+          "vector.quantization.type": "BINARY",
+          "vector.similarity_function": "COSINE",
+          "vector.hnsw.ef_construction": 100
+        }
+      }
+    },
+    {
+      "name": "chunk_id_unique",
+      "type": "RANGE",
+      "state": "ONLINE",
+      "labelsOrTypes": [
+        "Chunk"
+      ],
+      "properties": [
+        "id"
+      ],
+      "options": {
+        "indexConfig": {}
+      }
+    },
+    {
+      "name": "country_id_unique",
+      "type": "RANGE",
+      "state": "ONLINE",
+      "labelsOrTypes": [
+        "Country"
+      ],
+      "properties": [
+        "id"
+      ],
+      "options": {
+        "indexConfig": {}
+      }
+    },
+    {
+      "name": "document_id_unique",
+      "type": "RANGE",
+      "state": "ONLINE",
+      "labelsOrTypes": [
+        "Document"
+      ],
+      "properties": [
+        "id"
+      ],
+      "options": {
+        "indexConfig": {}
+      }
+    },
+    {
+      "name": "embassy_id_unique",
+      "type": "RANGE",
+      "state": "ONLINE",
+      "labelsOrTypes": [
+        "Embassy"
+      ],
+      "properties": [
+        "id"
+      ],
+      "options": {
+        "indexConfig": {}
+      }
+    },
+    {
+      "name": "index_1b9dcc97",
+      "type": "LOOKUP",
+      "state": "ONLINE",
+      "labelsOrTypes": null,
+      "properties": null,
+      "options": {
+        "indexConfig": {}
+      }
+    },
+    {
+      "name": "index_460996c0",
+      "type": "LOOKUP",
+      "state": "ONLINE",
+      "labelsOrTypes": null,
+      "properties": null,
+      "options": {
+        "indexConfig": {}
+      }
+    }
+  ]
+}

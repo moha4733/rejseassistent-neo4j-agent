@@ -1,0 +1,489 @@
+{
+  "generated_at": "2026-11-03T16:17:31.541825+00:00",
+  "live": true,
+  "passed": true,
+  "check_count": 88,
+  "checks": [
+    {
+      "check": "snapshot_document_ids_unique",
+      "passed": true,
+      "details": null
+    },
+    {
+      "check": "snapshot_chunk_ids_unique",
+      "passed": true,
+      "details": null
+    },
+    {
+      "check": "embedding_dimensions_and_finite_values",
+      "passed": true,
+      "details": null
+    },
+    {
+      "check": "source_urls_official_https",
+      "passed": true,
+      "details": null
+    },
+    {
+      "check": "contiguous_chunks_es-ambassade-kontakt",
+      "passed": true,
+      "details": null
+    },
+    {
+      "check": "contiguous_chunks_es-mistet-pas",
+      "passed": true,
+      "details": null
+    },
+    {
+      "check": "contiguous_chunks_es-rejsevejledning",
+      "passed": true,
+      "details": null
+    },
+    {
+      "check": "01-data-ingestion.json_no_pin_data",
+      "passed": true,
+      "details": null
+    },
+    {
+      "check": "01-data-ingestion.json_credential_placeholder",
+      "passed": true,
+      "details": null
+    },
+    {
+      "check": "02-graph-retrieval.json_no_pin_data",
+      "passed": true,
+      "details": null
+    },
+    {
+      "check": "02-graph-retrieval.json_credential_placeholder",
+      "passed": true,
+      "details": null
+    },
+    {
+      "check": "02-graph-retrieval.json_explicit_input_schema",
+      "passed": true,
+      "details": null
+    },
+    {
+      "check": "03-vector-retrieval.json_no_pin_data",
+      "passed": true,
+      "details": null
+    },
+    {
+      "check": "03-vector-retrieval.json_credential_placeholder",
+      "passed": true,
+      "details": null
+    },
+    {
+      "check": "03-vector-retrieval.json_explicit_input_schema",
+      "passed": true,
+      "details": null
+    },
+    {
+      "check": "three_actual_agent_traces",
+      "passed": true,
+      "details": null
+    },
+    {
+      "check": "three_actual_answers",
+      "passed": true,
+      "details": null
+    },
+    {
+      "check": "japan_tool_inputs",
+      "passed": true,
+      "details": null
+    },
+    {
+      "check": "japan_actual_tools_return_no_sources",
+      "passed": true,
+      "details": null
+    },
+    {
+      "check": "local_link_README.md:docs/architecture.md",
+      "passed": true,
+      "details": null
+    },
+    {
+      "check": "local_link_README.md:docs/screenshots/README.md",
+      "passed": true,
+      "details": null
+    },
+    {
+      "check": "local_link_README.md:workflows/01-data-ingestion.json",
+      "passed": true,
+      "details": null
+    },
+    {
+      "check": "local_link_README.md:workflows/02-graph-retrieval.json",
+      "passed": true,
+      "details": null
+    },
+    {
+      "check": "local_link_README.md:workflows/03-vector-retrieval.json",
+      "passed": true,
+      "details": null
+    },
+    {
+      "check": "local_link_README.md:agent/configuration.json",
+      "passed": true,
+      "details": null
+    },
+    {
+      "check": "local_link_README.md:agent/instructions.txt",
+      "passed": true,
+      "details": null
+    },
+    {
+      "check": "local_link_README.md:agent/tool-1-description.txt",
+      "passed": true,
+      "details": null
+    },
+    {
+      "check": "local_link_README.md:agent/tool-2-description.txt",
+      "passed": true,
+      "details": null
+    },
+    {
+      "check": "local_link_README.md:agent/skills.txt",
+      "passed": true,
+      "details": null
+    },
+    {
+      "check": "local_link_README.md:agent/development-prompts.md",
+      "passed": true,
+      "details": null
+    },
+    {
+      "check": "local_link_README.md:examples/RESULTS.md",
+      "passed": true,
+      "details": null
+    },
+    {
+      "check": "local_link_README.md:examples/raw/",
+      "passed": true,
+      "details": null
+    },
+    {
+      "check": "local_link_README.md:data/sources.json",
+      "passed": true,
+      "details": null
+    },
+    {
+      "check": "local_link_README.md:data/sample.json",
+      "passed": true,
+      "details": null
+    },
+    {
+      "check": "local_link_README.md:data/snapshot.json",
+      "passed": true,
+      "details": null
+    },
+    {
+      "check": "local_link_README.md:docs/SETUP.md",
+      "passed": true,
+      "details": null
+    },
+    {
+      "check": "local_link_README.md:neo4j/schema.cypher",
+      "passed": true,
+      "details": null
+    },
+    {
+      "check": "local_link_README.md:scripts/",
+      "passed": true,
+      "details": null
+    },
+    {
+      "check": "local_link_README.md:docs/validation.json",
+      "passed": true,
+      "details": null
+    },
+    {
+      "check": "local_link_README.md:examples/RESULTS.md",
+      "passed": true,
+      "details": null
+    },
+    {
+      "check": "local_link_README.md:docs/SETUP.md",
+      "passed": true,
+      "details": null
+    },
+    {
+      "check": "local_link_README.md:examples/RESULTS.md",
+      "passed": true,
+      "details": null
+    },
+    {
+      "check": "local_link_agent/development-prompts.md:instructions.txt",
+      "passed": true,
+      "details": null
+    },
+    {
+      "check": "local_link_agent/development-prompts.md:../examples/RESULTS.md",
+      "passed": true,
+      "details": null
+    },
+    {
+      "check": "local_link_docs/architecture.md:../neo4j/graph-retrieval.cypher",
+      "passed": true,
+      "details": null
+    },
+    {
+      "check": "local_link_docs/architecture.md:../neo4j/vector-retrieval.cypher",
+      "passed": true,
+      "details": null
+    },
+    {
+      "check": "local_link_docs/SETUP.md:../compose.yml",
+      "passed": true,
+      "details": null
+    },
+    {
+      "check": "local_link_docs/SETUP.md:../workflows/",
+      "passed": true,
+      "details": null
+    },
+    {
+      "check": "local_link_docs/SETUP.md:../agent/instructions.txt",
+      "passed": true,
+      "details": null
+    },
+    {
+      "check": "local_link_docs/SETUP.md:../agent/tool-1-description.txt",
+      "passed": true,
+      "details": null
+    },
+    {
+      "check": "local_link_docs/SETUP.md:../agent/tool-2-description.txt",
+      "passed": true,
+      "details": null
+    },
+    {
+      "check": "local_link_docs/SETUP.md:../examples/RESULTS.md",
+      "passed": true,
+      "details": null
+    },
+    {
+      "check": "local_link_examples/04-retrieval-failure-before-fix.md:raw/04-retrieval-failure-before-fix.json",
+      "passed": true,
+      "details": null
+    },
+    {
+      "check": "local_link_examples/03-japan.md:raw/03-japan.json",
+      "passed": true,
+      "details": null
+    },
+    {
+      "check": "local_link_examples/01-address.md:raw/01-address.json",
+      "passed": true,
+      "details": null
+    },
+    {
+      "check": "local_link_examples/02-passport.md:raw/02-passport.json",
+      "passed": true,
+      "details": null
+    },
+    {
+      "check": "local_link_examples/RESULTS.md:01-address.md",
+      "passed": true,
+      "details": null
+    },
+    {
+      "check": "local_link_examples/RESULTS.md:02-passport.md",
+      "passed": true,
+      "details": null
+    },
+    {
+      "check": "local_link_examples/RESULTS.md:03-japan.md",
+      "passed": true,
+      "details": null
+    },
+    {
+      "check": "local_link_examples/RESULTS.md:raw/",
+      "passed": true,
+      "details": null
+    },
+    {
+      "check": "local_link_examples/RESULTS.md:04-retrieval-failure-before-fix.md",
+      "passed": true,
+      "details": null
+    },
+    {
+      "check": "local_link_docs/screenshots/README.md:../../workflows/01-data-ingestion.json",
+      "passed": true,
+      "details": null
+    },
+    {
+      "check": "local_link_docs/screenshots/README.md:01-data-ingestion.jpg",
+      "passed": true,
+      "details": null
+    },
+    {
+      "check": "local_link_docs/screenshots/README.md:../../workflows/02-graph-retrieval.json",
+      "passed": true,
+      "details": null
+    },
+    {
+      "check": "local_link_docs/screenshots/README.md:02-graph-retrieval.jpg",
+      "passed": true,
+      "details": null
+    },
+    {
+      "check": "local_link_docs/screenshots/README.md:../../workflows/03-vector-retrieval.json",
+      "passed": true,
+      "details": null
+    },
+    {
+      "check": "local_link_docs/screenshots/README.md:03-vector-retrieval.jpg",
+      "passed": true,
+      "details": null
+    },
+    {
+      "check": "local_link_docs/screenshots/README.md:../../agent/instructions.txt",
+      "passed": true,
+      "details": null
+    },
+    {
+      "check": "local_link_docs/screenshots/README.md:09-agent-model-instructions.jpg",
+      "passed": true,
+      "details": null
+    },
+    {
+      "check": "local_link_docs/screenshots/README.md:10-agent-tool-connections.jpg",
+      "passed": true,
+      "details": null
+    },
+    {
+      "check": "local_link_docs/screenshots/README.md:11-agent-input-mapping.jpg",
+      "passed": true,
+      "details": null
+    },
+    {
+      "check": "local_link_docs/screenshots/README.md:../../examples/RESULTS.md",
+      "passed": true,
+      "details": null
+    },
+    {
+      "check": "local_link_docs/screenshots/README.md:07-address-tool-result.jpg",
+      "passed": true,
+      "details": null
+    },
+    {
+      "check": "local_link_docs/screenshots/README.md:08-address-answer.jpg",
+      "passed": true,
+      "details": null
+    },
+    {
+      "check": "local_link_docs/screenshots/README.md:06-japan-tool-result.jpg",
+      "passed": true,
+      "details": null
+    },
+    {
+      "check": "local_link_docs/screenshots/README.md:05-passport-after-retrieval-fix.jpg",
+      "passed": true,
+      "details": null
+    },
+    {
+      "check": "local_link_docs/screenshots/README.md:04-passport-before-fix.jpg",
+      "passed": true,
+      "details": null
+    },
+    {
+      "check": "live_node_counts",
+      "passed": true,
+      "details": [
+        {
+          "label": "Document",
+          "count": 3
+        },
+        {
+          "label": "Country",
+          "count": 1
+        },
+        {
+          "label": "Chunk",
+          "count": 20
+        },
+        {
+          "label": "Embassy",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "check": "live_relationship_counts",
+      "passed": true,
+      "details": [
+        {
+          "type": "ABOUT_COUNTRY",
+          "count": 3
+        },
+        {
+          "type": "HAS_CHUNK",
+          "count": 20
+        },
+        {
+          "type": "DOCUMENTS",
+          "count": 1
+        },
+        {
+          "type": "LOCATED_IN",
+          "count": 1
+        }
+      ]
+    },
+    {
+      "check": "live_vector_index_online",
+      "passed": true,
+      "details": [
+        {
+          "name": "chunk_embedding",
+          "state": "ONLINE"
+        }
+      ]
+    },
+    {
+      "check": "live_unique_constraints",
+      "passed": true,
+      "details": null
+    },
+    {
+      "check": "live_graph_address",
+      "passed": true,
+      "details": null
+    },
+    {
+      "check": "live_graph_japan_empty",
+      "passed": true,
+      "details": null
+    },
+    {
+      "check": "live_passport_recall_Jeg har mistet mit pas. Hvad skal jeg gøre?",
+      "passed": true,
+      "details": null
+    },
+    {
+      "check": "live_sources_correct_country",
+      "passed": true,
+      "details": null
+    },
+    {
+      "check": "live_passport_recall_hvad skal jeg gøre hvis jeg har mistet mit pas?",
+      "passed": true,
+      "details": null
+    },
+    {
+      "check": "live_sources_correct_country",
+      "passed": true,
+      "details": null
+    },
+    {
+      "check": "live_vector_japan_empty",
+      "passed": true,
+      "details": null
+    }
+  ],
+  "database": "rejseassistent-repro",
+  "restore_runs": 2
+}

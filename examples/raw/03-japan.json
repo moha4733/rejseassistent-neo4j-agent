@@ -1,0 +1,65 @@
+{
+  "id": "gwtcePBsDcSqhjCo",
+  "status": "success",
+  "model": "google/gemini-3.1-flash-lite",
+  "startedAt": "2026-11-03 16:02:14.138",
+  "stoppedAt": "2026-11-03 16:02:23.044",
+  "question": "Jeg har mistet mit pas i Japan. Hvad skal jeg gøre?",
+  "timeline": [
+    {
+      "type": "tool-call",
+      "name": "v-rkt-j-s-g-rejseinformation",
+      "input": {
+        "country": "Japan",
+        "question": "Hvad skal jeg gøre, hvis jeg har mistet mit pas i Japan?"
+      },
+      "output": {
+        "executionId": "178",
+        "status": "success",
+        "data": {
+          "Code in JavaScript": [
+            {
+              "country": "Japan",
+              "question": "Hvad skal jeg gøre, hvis jeg har mistet mit pas i Japan?",
+              "found": false,
+              "source_count": 0,
+              "sources": [],
+              "message": "Der blev ikke fundet kildetekster for denne søgning og dette land i databasen. Besvar ikke spørgsmålet ud fra kilder om andre lande."
+            }
+          ]
+        }
+      },
+      "success": true,
+      "workflowName": "Værktøj – søg rejseinformation",
+      "workflowExecutionId": "178"
+    },
+    {
+      "type": "tool-call",
+      "name": "v-rkt-j-find-ambassade",
+      "input": {
+        "country": "Japan"
+      },
+      "output": {
+        "executionId": "179",
+        "status": "success",
+        "data": {
+          "Klargør ambassaderesultat": [
+            {
+              "found": false,
+              "count": 0,
+              "results": [],
+              "message": "Der blev ikke fundet ambassadeoplysninger for det valgte land i databasen. Det betyder ikke, at ambassaden ikke findes."
+            }
+          ]
+        }
+      },
+      "success": true,
+      "workflowName": "Værktøj – find ambassade",
+      "workflowExecutionId": "179"
+    },
+    {
+      "type": "text",
+      "content": "Jeg mangler desværre oplysninger i mit datagrundlag om, hvad man skal gøre ved mistet pas i Japan, ligesom jeg ikke har oplysningerne om den danske ambassade i landet i min database.\n\nJeg anbefaler, at du kontakter den danske ambassade i Japan direkte for vejledning. Du kan finde deres officielle kontaktoplysninger via Udenrigsministeriets hjemmeside."
+    }
+  ]
+}

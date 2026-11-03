@@ -1,0 +1,120 @@
+{
+  "id": "Iyw1hEfZ2Qe8BKq8",
+  "name": "Værktøj – søg rejseinformation",
+  "nodes": [
+    {
+      "parameters": {
+        "inputSource": "jsonExample",
+        "jsonExample": "{\n  \"country\": \"Spanien\",\n  \"question\": \"Jeg har mistet mit pas. Hvad skal jeg gøre?\"\n}"
+      },
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        0,
+        0
+      ],
+      "id": "eba6f1db-eb60-4274-92f9-b6ce9c8a6e63",
+      "name": "When Executed by Another Workflow"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://host.docker.internal:11434/api/embed",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ {\n  model: \"nomic-embed-text\",\n  input: \"search_query: \" + $json.question,\n  keep_alive: 0\n} }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.5,
+      "position": [
+        224,
+        0
+      ],
+      "id": "1e226968-cd57-4c7b-81d7-78a181940d34",
+      "name": "embedding"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://host.docker.internal:7474/db/rejseassistent/query/v2",
+        "authentication": "genericCredentialType",
+        "genericAuthType": "httpBasicAuth",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ {\n  statement: [\n    \"MATCH (c:Chunk)\",\n    \"SEARCH c IN (\",\n    \"  VECTOR INDEX chunk_embedding\",\n    \"  FOR $embedding\",\n    \"  LIMIT 20\",\n    \") SCORE AS match_score\",\n    \"MATCH (d:Document)-[:HAS_CHUNK]->(c)\",\n    \"WHERE toLower(d.country) = toLower(trim($country))\",\n    \"WITH c, d, match_score,\",\n    \"     match_score + CASE WHEN $topic_hint <> '' AND d.topic = $topic_hint\",\n    \"                        THEN 0.25 ELSE 0 END AS rank_score\",\n    \"ORDER BY rank_score DESC\",\n    \"LIMIT 3\",\n    \"MATCH (d)-[:HAS_CHUNK]->(neighbor:Chunk)\",\n    \"WHERE abs(neighbor.chunk_index - c.chunk_index) <= 1\",\n    \"WITH d, neighbor,\",\n    \"     max(rank_score) AS selection_score,\",\n    \"     max(CASE WHEN neighbor = c THEN match_score ELSE null END) AS vector_score\",\n    \"RETURN neighbor.id AS chunk_id,\",\n    \"       neighbor.chunk_index AS chunk_index,\",\n    \"       neighbor.text AS text,\",\n    \"       d.title AS title,\",\n    \"       d.source_url AS source_url,\",\n    \"       d.retrieved_at AS retrieved_at,\",\n    \"       d.country AS country,\",\n    \"       d.topic AS topic,\",\n    \"       vector_score AS score,\",\n    \"       selection_score,\",\n    \"       CASE WHEN vector_score IS NULL\",\n    \"            THEN 'neighbor' ELSE 'vector'\",\n    \"       END AS retrieved_via\",\n    \"ORDER BY selection_score DESC, source_url, chunk_index\"\n  ].join(\"\\n\"),\n  parameters: {\n    embedding: $json.embeddings[0],\n    country: $('When Executed by Another Workflow').item.json.country,\n    topic_hint: /\\bpas\\b/i.test($('When Executed by Another Workflow').item.json.question || '') && /mist|stj[aå]|bortkom/i.test($('When Executed by Another Workflow').item.json.question || '') ? 'mistet_pas' : ''\n  }\n} }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.5,
+      "position": [
+        448,
+        0
+      ],
+      "id": "5ed92cb3-91ac-49fb-9610-656f749853fe",
+      "name": "Søg kilder i Neo4j",
+      "credentials": {
+        "httpBasicAuth": {
+          "id": "REPLACE_WITH_YOUR_CREDENTIAL_ID",
+          "name": "Neo4j Basic Auth (configure after import)"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "mode": "runOnceForEachItem",
+        "jsCode": "if ($json.errors?.length) {\n  throw new Error(\n    'Neo4j-fejl: ' +\n    $json.errors.map(error => error.message).join('; ')\n  );\n}\n\nconst data = $json.data;\n\nif (!Array.isArray(data?.fields) || !Array.isArray(data?.values)) {\n  throw new Error('Neo4j returnerede et uventet format.');\n}\n\nconst input = $('When Executed by Another Workflow').item.json;\n\nconst sources = data.values.map((row, index) => {\n  const source = Object.fromEntries(\n    data.fields.map((field, fieldIndex) => [\n      field,\n      row[fieldIndex]\n    ])\n  );\n\n  return {\n    source_number: index + 1,\n    ...source\n  };\n});\n\nreturn {\n  json: {\n    country: input.country,\n    question: input.question,\n    found: sources.length > 0,\n    source_count: sources.length,\n    sources,\n    message: sources.length > 0\n      ? 'Søgningen har fundet tekstbidder. De er ikke nødvendigvis alle relevante. Brug kun oplysninger, der besvarer spørgsmålet og gælder det valgte land. Henvis med [Kilde N] ud fra source_number og medtag den tilhørende source_url. Hvis teksterne ikke besvarer spørgsmålet, sig det tydeligt. retrieved_at er indsamlingsdatoen, ikke kildens opdateringsdato.'\n      : 'Der blev ikke fundet kildetekster for denne søgning og dette land i databasen. Besvar ikke spørgsmålet ud fra kilder om andre lande.'\n  }\n};"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        672,
+        0
+      ],
+      "id": "fa66c7e0-fa16-4d8e-bda9-e505c3e45435",
+      "name": "Code in JavaScript"
+    }
+  ],
+  "connections": {
+    "When Executed by Another Workflow": {
+      "main": [
+        [
+          {
+            "node": "embedding",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "embedding": {
+      "main": [
+        [
+          {
+            "node": "Søg kilder i Neo4j",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Søg kilder i Neo4j": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false
+  },
+  "active": false,
+  "pinData": {}
+}
